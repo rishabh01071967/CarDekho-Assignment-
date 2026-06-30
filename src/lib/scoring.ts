@@ -161,6 +161,15 @@ function filterCars(cars: Car[], p: Preferences): { matches: Car[]; relaxedNote:
       };
     }
   }
+  // Nothing survived even the loosest filter. The usual cause is a brand/model
+  // we don't stock — say so honestly instead of blaming the budget.
+  if (p.makes.length > 0) {
+    const brands = p.makes.join(", ");
+    return {
+      matches: cars,
+      relaxedNote: `We don't have ${brands} in our lineup yet — here are the closest cars we do have.`,
+    };
+  }
   return { matches: cars, relaxedNote: "Nothing matched your budget, so here's the closest we have." };
 }
 
